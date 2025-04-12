@@ -118,7 +118,7 @@ def visualize(**kwargs):
 
     for a, b in kwargs.get("linear"):
         y_vals = a * x_vals + b
-        plt.plot(x_vals, y_vals, linewidth=1)  # możesz zmienić kolor i styl
+        plt.plot(x_vals, y_vals, linewidth=1)
 
     plt.grid(True)
     plt.show()
@@ -164,8 +164,7 @@ def main():
     a_norm, b_norm = find_extremum_reccurency(0, 0, step=0.1, iterations_lim=100)
     a_own, b_own = recalculate_linear_equasion(a_norm, b_norm)
 
-
-    #Scikitlearn
+    # Scikitlearn
     X = df[["Height"]]
     y = df["Weight"]
     model = LinearRegression()
@@ -173,7 +172,6 @@ def main():
     a2 = model.coef_[0]
     b2 = model.intercept_
     logger.info(f"Linear regression from scikit: Y = {a2:.4f} * X + {b2:.4f}")
-
 
     visualize_thread = threading.Thread(
         target=lambda: visualize(x="Height", y="Weight", linear=((a_own, b_own), (a2, b2)))

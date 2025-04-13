@@ -26,7 +26,7 @@ def main():
     )
     thread.start()
 
-    a_norm, b_norm = Reg.find_extremum_recurrence_gradient(0, 0, learning_rate=0.7, iterations_lim=200, slowing=0.05)
+    a_norm, b_norm = Reg.find_extremum_recurrence_gradient(0, 0, learning_rate=0.7, iterations_lim=1000, slowing=0.05)
     Reg.recalculate_linear_equation(a_norm, b_norm)
 
 

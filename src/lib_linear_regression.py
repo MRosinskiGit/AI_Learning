@@ -159,6 +159,7 @@ class RegressionGradient(RegressionCore):
         return (-2 / len(self.df)) * ((y_true - y_pred).sum())
 
     def find_extremum_recurrence_gradient(self, a, b, learning_rate, iterations_lim, current_iter=0, slowing=0):
+        tol = 1e-6
         if current_iter % 100 == 0:
             logger.info(
                 f"Starting iteration with values: a:{a}, b:{b} | step: a:{learning_rate} | curr_iter:{current_iter}"
@@ -166,12 +167,17 @@ class RegressionGradient(RegressionCore):
         if current_iter == iterations_lim:
             logger.info("Reached limit of iterations")
             return a, b
+        prev_a = a
+        prev_b = b
         da = self.calculate_rss_derivative(a, b, d="a")
         db = self.calculate_rss_derivative(a, b, d="b")
         a = a - learning_rate * da
         b = b - learning_rate * db
         self.a_vis = a
         self.b_vis = b
+        if abs(prev_a - a) < tol and abs(prev_b - b) < tol:
+            logger.success(f"Progress is lower than tolerance. Terminating recurrence at {current_iter} iteration.")
+            return a, b
         if slowing:
             time.sleep(slowing)
         return self.find_extremum_recurrence_gradient(a, b, learning_rate, iterations_lim, current_iter + 1, slowing)

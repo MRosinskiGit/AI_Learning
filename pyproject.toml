@@ -10,3 +10,4 @@ lint.ignore = ["E731"]
 # Same as Black.
 line-length = 120
 indent-width = 4
+
